@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Log out{% endblock title %}
+
+{% block content %}
+
+  <main id="main" class="main">
+
+    <section class="section">
+      <div class="row">
+          <center>
+        <div class="col-lg-6">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Logged out</h5>
+              <p>You have been logged out <a href="{% url 'login' %}">Logged in again</a></p>
+            </div>
+          </div>
+
+        </div>
+          </center>
+      </div>
+    </section>
+
+  </main>
+    <!-- End #main -->
+
+{% endblock content %}

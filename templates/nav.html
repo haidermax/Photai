@@ -1,0 +1,46 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg">
+
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="{% static 'img/logo.png' %}" alt="" width="100px">
+            PhotAI
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link nav-link-1 active" aria-current="page" href="{% url 'index' %}">Photos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-3" href="about.html">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-4" href="contact.html">Contact</a>
+                </li>
+                <li class="nav-item dropdown">
+                {% if request.user.is_authenticated %}
+                    <span class="nav-link dropdown-toggle nav-link-2" href="#" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ request.user.get_full_name }}
+                  </span>
+                    <div class="dropdown-menu" aria-labelledby="accountDropdown">
+                        <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+                        <a class="dropdown-item" href="{% url 'upload' %}">Create a Post</a>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                    </div>
+                {% else %}
+                  <span class="nav-link dropdown-toggle nav-link-2" href="#" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Account
+                  </span>
+                  <div class="dropdown-menu" aria-labelledby="accountDropdown">
+                    <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+                    <a class="dropdown-item" href="{% url 'register' %}">Register</a>
+                  </div>
+                {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

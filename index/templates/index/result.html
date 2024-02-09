@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+<style>
+    .image-container {
+       
+  position: relative;
+  overflow: hidden;
+  padding-top: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  
+}
+
+.image-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 768px) {
+  .image-container {
+    padding-top: 50%;
+  }
+}
+
+</style>
+    <div class="container-fluid tm-container-content tm-mt-60">
+        <div class="row mb-4">
+            <h2 class="col-6 tm-text-primary">
+                Result Search Photos for <strong>{{ result }}</strong>
+            </h2>
+        </div>
+        <div class="row tm-mb-90 tm-gallery">
+            {% for p in qs %}
+        	<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+                <figure class="effect-ming tm-video-item image-container">
+                    <img src="{{ p.photo.url }}" alt="{{ p.title }}" class="img-fluid">
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2>{{ p.title }}</h2>
+                        <a href="{{ p.get_photo_info_url }}">View Details</a>
+                    </figcaption>
+                </figure>
+                <div class="d-flex justify-content-between tm-text-gray">
+                    <span class="tm-text-gray-light">{{ p.category }} | {{ p.updated | date }}</span>
+                    <span><i class="fa-solid fa-eye"></i> {{ p.view }}</span>
+                    <span><i class="fa-solid fa-heart"></i> {{ p.liked.all.count }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div> <!-- row -->
+    </div> <!-- container-fluid, tm-container-content -->
+
+{% endblock content %}

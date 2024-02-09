@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+<style>
+    .image-container {
+       
+  position: relative;
+  overflow: hidden;
+  padding-top: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  
+}
+
+.image-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 768px) {
+  .image-container {
+    padding-top: 50%;
+  }
+}
+
+</style>
+
+
+
+    <div class="container-fluid tm-container-content tm-mt-60">
+        <div class="row mb-4">
+            <h2 class="col-6 tm-text-primary">
+                Latest Photos
+            </h2>
+            <div class="col-6 d-flex justify-content-end align-items-center">
+
+            </div>
+        </div>
+        <div class="row tm-mb-90 tm-gallery">
+            {% for p in photos %}
+        	<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+                <figure class="effect-ming tm-video-item image-container">
+                    <img src="{{ p.thumbnail.url }}" alt="{{ p.title }}" class="img-fluid">
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2>{{ p.title }}</h2>
+                        <a href="{{ p.get_photo_info_url }}">View Details</a>
+                    </figcaption>
+                </figure>
+                <div class="d-flex justify-content-between tm-text-gray">
+                    <span class="tm-text-gray-light">{{ p.category }} | {{ p.updated | date }}</span>
+                    <span><i class="fa-solid fa-eye"></i> {{ p.view }}</span>
+                    <span><i class="fa-solid fa-heart"></i> {{ p.liked.all.count }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div> <!-- row -->
+
+        <div class="row tm-mb-90">
+            <div class="col-12 d-flex justify-content-between align-items-center tm-paging-col">
+                {% if photos.has_previous %}
+                    <a href="?page={{ photos.previous_page_number }}" class="btn btn-primary tm-btn-prev mb-2">Previous</a>
+                {% else %}
+                    <a href="javascript:void(0);" class="btn btn-primary tm-btn-prev mb-2 disabled">Previous</a>
+                {% endif %}
+                <div class="tm-paging d-flex">
+                    {% for page_num in photos.paginator.page_range %}
+                        {% if photos.number == page_num %}
+                            <a href="javascript:void(0);" class="active tm-paging-link">{{ page_num }}</a>
+                        {% else %}
+                            <a href="?page={{ page_num }}" class="tm-paging-link">{{ page_num }}</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% if photos.has_next %}
+                    <a href="?page={{ photos.next_page_number }}" class="btn btn-primary tm-btn-next">Next Page</a>
+                {% else %}
+                    <a href="javascript:void(0);" class="btn btn-primary tm-btn-next disabled">Next Page</a>
+                {% endif %}
+            </div>
+        </div>
+
+
+
+<!--        <div class="row tm-mb-90">-->
+<!--            <div class="col-12 d-flex justify-content-between align-items-center tm-paging-col">-->
+<!--                <a href="javascript:void(0);" class="btn btn-primary tm-btn-prev mb-2 disabled">Previous</a>-->
+<!--                <div class="tm-paging d-flex">-->
+<!--                    <a href="javascript:void(0);" class="active tm-paging-link">1</a>-->
+<!--                    <a href="javascript:void(0);" class="tm-paging-link">2</a>-->
+<!--                    <a href="javascript:void(0);" class="tm-paging-link">3</a>-->
+<!--                    <a href="javascript:void(0);" class="tm-paging-link">4</a>-->
+<!--                </div>-->
+<!--                <a href="javascript:void(0);" class="btn btn-primary tm-btn-next">Next Page</a>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div> <!-- container-fluid, tm-container-content -->
+
+{% endblock content %}
